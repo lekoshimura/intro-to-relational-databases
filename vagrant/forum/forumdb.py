@@ -1,8 +1,10 @@
 #
 # Database access functions for the web forum.
-# 
+#
 
 import time
+import psycopg2
+import bleach
 
 ## Database connection
 DB = []
@@ -16,8 +18,20 @@ def GetAllPosts():
       pointing to the post content, and 'time' key pointing to the time
       it was posted.
     '''
-    posts = [{'content': str(row[1]), 'time': str(row[0])} for row in DB]
-    posts.sort(key=lambda row: row['time'], reverse=True)
+    DB = psycopg2.connect('dbname=forum');
+    cursor = DB.cursor();
+    sql = "select time, content from posts order by time desc";
+    cursor.execute(sql);
+
+    # List Comprehensions (https://docs.python.org/2/tutorial/datastructures.html#list-comprehensions)
+    # a = [str(wi) for wi in wordids]
+    # is the same as
+    # a = []
+    # for wi in wordids:
+    #     a.append(str(wi))
+    posts = ({'content': str(row[1]), 'time': str(row[0])} for row in cursor.fetchall())
+
+    DB.close();
     return posts
 
 ## Add a post to the database.
@@ -27,5 +41,11 @@ def AddPost(content):
     Args:
       content: The text content of the new post.
     '''
-    t = time.strftime('%c', time.localtime())
-    DB.append((t, content))
+    content = bleach.clean(content);
+    DB = psycopg2.connect('dbname=forum');
+    cursor = DB.cursor();
+    cursor.execute("insert into posts (content) values (%s)", (content,));
+    DB.commit();
+    DB.close();
+    # t = time.strftime('%c', time.localtime())
+    # DB.append((t, content))

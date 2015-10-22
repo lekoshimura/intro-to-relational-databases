@@ -23,7 +23,7 @@ def testCount():
         raise TypeError(
             "countPlayers() should return numeric zero, not string '0'.")
     if c != 0:
-        raise ValueError("After deleting, countPlayers should return zero.")
+        raise ValueError("After deleting, countPlayers should return zero.", c)
     print "3. After deleting, countPlayers() returns zero."
 
 
@@ -135,5 +135,3 @@ if __name__ == '__main__':
     testReportMatches()
     testPairings()
     print "Success!  All tests pass!"
-
-
