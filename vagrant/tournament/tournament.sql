@@ -1,4 +1,10 @@
--- Table definitions for the tournament project.
+-- Antes de executar este script, faça:
+-- $ psql
+-- vagrant => create database tournament;
+
+-- Para executar este script, faça:
+-- $ psql
+-- \i tournament.sql
 
 \c tournament;
 
