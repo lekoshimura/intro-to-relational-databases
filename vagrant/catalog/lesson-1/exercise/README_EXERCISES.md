@@ -67,9 +67,19 @@ Resposta: ex03_manyToMany.py
 
 We now want to add a column to our shelter database to specify the maximum_capacity each shelter can have for puppies, also add a current_occupancy for finding the current number of puppies that haven’t yet been adopted that are living in the shelter. Add the maximum_capacity and current_occupancy columns to your database.
 
+```
+Resposta: ex04_addShelterCapacity
+```
 
+# Exercise 5 - Shelter Overflow Algorithm
 
-Where Do I Start?
+Create a function to check a puppy into a shelter, if the shelter is at capacity, prompt the user to try a different shelter. If you’re feeling extra ambitious write an algorithm that will find another shelter in the same area or with a higher vacancy. If all shelters are full, prompt the user that a new shelter needs to be opened.
+
+```
+Resposta: ex05_shelterOverflow.py
+```
+
+# Where Do I Start?
 
 Check out the SQLAlchemy documentation on relationships. http://docs.sqlalchemy.org/en/latest/orm/relationships.html
 
