@@ -33,7 +33,7 @@ class Puppy(Base):
     shelter = relationship(Shelter)
 
 class Profile(Base):
-    id Column(Integer, primary_key = True)
+    id = Column(Integer, primary_key = True)
     picture = Column(String(250))
 
 engine = create_engine('sqlite:///puppyshelter.db')
