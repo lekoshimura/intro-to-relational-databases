@@ -1,57 +1,36 @@
 import sys
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import cgi
+import re
+import string
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from restaurant import Restaurant
+
+engine = create_engine("sqlite:///restaurantmenu.db")
+session = sessionmaker(bind=engine)()
 
 class webServerHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
-            if self.path.endswith("/hello"):
-                self.send_response(200)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
-                output = ""
-                output += "<html><body>"
-                output += "<h1>Hello!</h1>"
-                output += '''<form method='POST' enctype='multipart/form-data' action='/hello'><h2>What would you like me to say?</h2><input name="message" type="text" ><input type="submit" value="Submit"> </form>'''
-                output += "</body></html>"
-                self.wfile.write(output)
-                print output
-                return
-
-            if self.path.endswith("/hola"):
-                self.send_response(200)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
-                output = ""
-                output += "<html><body>"
-                output += "<h1>&#161 Hola !</h1>"
-                output += '''<form method='POST' enctype='multipart/form-data' action='/hello'><h2>What would you like me to say?</h2><input name="message" type="text" ><input type="submit" value="Submit"> </form>'''
-                output += "</body></html>"
-                self.wfile.write(output)
-                print output
-                return
-            
-            if self.path.endwith("/restaurants"):
+            if self.path.endswith("/restaurants"):
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
                 try:
-                    engine = create_engine("sqlite:///restaurantmenu.db")
-                    session = sessionmaker(bind=engine)()
-                    
                     restaurants = session.query(Restaurant).all()
                     output = ""
                     output += "<html><body>"
                     output += "<h1>Restaurantes</h1>"
                     for r in restaurants:
                         output += "<ul>"
-                        output += "<li>" + r.id + "</li>"
+                        output += "<li>" + str(r.id) + "</li>"
                         output += "<li>" + r.name + "</li>"
+                        output += "<li><a href='/restaurants/" + str(r.id) + "/edit'>Edit</a>"
+                        output += "<li><a href='/restaurants/" + str(r.id) + "/delete'>Delete</a>"
                         output += "</ul>"
+                    output += "<a href='restaurants/new'>Criar novo restaurante</a>"
                     output += "</body></html>"
                     self.wfile.write(output)
                     print output
@@ -65,30 +44,136 @@ class webServerHandler(BaseHTTPRequestHandler):
                     print output
                 return
 
+            if self.path.endswith("/restaurants/new"):
+                self.send_response(200)
+                self.send_header('Content-type', 'text/html')
+                self.end_headers()
+                output = ""
+                output += "<html><body>"
+                output += "<h1>Criar Novo Restaurante</h1>"
+                output += "<form method='post' enctype='multipart/form-data' action='/restaurants/post'>"
+                output += "Nome: <input type='text' name='name' />"
+                output += "<input type='submit' />"
+                output += "</form>"
+                output += "</body></html>"
+                self.wfile.write(output)
+                print output
+
+            if re.search('/restaurants/\d+/edit', self.path, re.M|re.I):
+                self.send_response(200)
+                self.send_header('Content-type', 'text/html')
+                self.end_headers()
+
+                id = self.path.split('/')[2]
+                restaurant = session.query(Restaurant).get(int(id))
+
+                output = ""
+                output += '''
+                <html><body>
+                <h1>Editar Restaurante</h1>
+                <form method='POST' enctype='multipart/form-data' action='/restaurants/edit_post'>
+                Nome: <input type="text" name="name" value="%s" />
+                <br /><input type="text" name="id" value="%s" />
+                <br /><input type="submit" />
+                </form>
+                </body></html>
+                '''  % (restaurant.name, restaurant.id)
+                self.wfile.write(output)
+                print output
+
+            if re.search('/restaurants/\d+/delete', self.path, re.M|re.I):
+                self.send_response(200)
+                self.send_header('Content-type', 'text/html')
+                self.end_headers()
+
+                id = self.path.split('/')[2]
+                restaurant = session.query(Restaurant).get(int(id))
+
+                output = ""
+                output += '''
+                <html><body>
+                <h1>Excluir Restaurante?</h1>
+                <form method='POST' enctype='multipart/form-data' action='/restaurants/delete_post'>
+                <ul>
+                <li>Nome: %s</li>
+                <li>id: %s <input type="hidden" name="id" value="%s" /> </li>
+                </ul>
+                <input type="submit"/>
+                </form>
+                </body></html>
+                '''  % (restaurant.name, restaurant.id, restaurant.id)
+                self.wfile.write(output)
+                print output
+
         except IOError:
             self.send_error(404, 'File Not Found: %s' % self.path)
 
     def do_POST(self):
-        try:
-            self.send_response(301)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
-            ctype, pdict = cgi.parse_header(
-                self.headers.getheader('content-type'))
-            if ctype == 'multipart/form-data':
-                fields = cgi.parse_multipart(self.rfile, pdict)
-                messagecontent = fields.get('message')
-            output = ""
-            output += "<html><body>"
-            output += " <h2> Okay, how about this: </h2>"
-            output += "<h1> %s </h1>" % messagecontent[0]
-            output += '''<form method='POST' enctype='multipart/form-data' action='/hello'><h2>What would you like me to say?</h2><input name="message" type="text" ><input type="submit" value="Submit"> </form>'''
-            output += "</body></html>"
-            self.wfile.write(output)
-            print output
-        except:
-            pass
+        if self.path.endswith("/restaurants/edit_post"):
+            try:
+                ctype, pdict = cgi.parse_header(
+                    self.headers.getheader('content-type'))
+                if ctype == 'multipart/form-data':
+                    fields = cgi.parse_multipart(self.rfile, pdict)
+                restaurant_id = fields.get('id')[0]
+                restaurant_name = fields.get('name')[0]
 
+                print "/restaurants/edit_post"
+                print "restaurant_id: " + restaurant_id
+                print "restaurant_name: " + restaurant_name
+
+                restaurant = session.query(Restaurant).get(int(restaurant_id))
+                restaurant.name = restaurant_name
+                session.add(restaurant)
+                session.commit()
+
+                self.send_response(301)
+                self.send_header('Content-type', 'text/html')
+                self.send_header("Location", '/restaurants')
+                self.end_headers()
+            except:
+                pass
+
+        if self.path.endswith("/restaurants/delete_post"):
+            try:
+                ctype, pdict = cgi.parse_header(
+                    self.headers.getheader('content-type'))
+                if ctype == 'multipart/form-data':
+                    fields = cgi.parse_multipart(self.rfile, pdict)
+                restaurant_id = fields.get('id')[0]
+
+                print "/restaurants/delete_post"
+                print "restaurant_id: " + restaurant_id
+
+                restaurant = session.query(Restaurant).get(int(restaurant_id))
+                session.delete(restaurant)
+                session.commit()
+
+                self.send_response(301)
+                self.send_header('Content-type', 'text/html')
+                self.send_header("Location", '/restaurants')
+                self.end_headers()
+            except:
+                pass
+
+        if self.path.endswith("/restaurants/post"):
+            try:
+                ctype, pdict = cgi.parse_header(
+                    self.headers.getheader('content-type'))
+                if ctype == 'multipart/form-data':
+                    fields = cgi.parse_multipart(self.rfile, pdict)
+                    restaurant_name = fields.get('name')[0]
+
+                restaurant = Restaurant(name = restaurant_name)
+                session.add(restaurant)
+                session.commit()
+
+                self.send_response(301)
+                self.send_header('Content-type', 'text/html')
+                self.send_header("Location", '/restaurants')
+                self.end_headers()
+            except:
+                pass
 
 def main():
     try:
@@ -103,5 +188,5 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
+
 # https://udacity-lekoshimura.c9.io:8080/hello
