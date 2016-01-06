@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from restaurant import Base, Restaurant, MenuItem
 
-engine = create_engine('sqlite://restaurantmenu.db')
+engine = create_engine('sqlite:///restaurantmenu.db')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
@@ -21,6 +21,11 @@ def HelloWorld():
     output = ''
     for i in items:
         output += i.name
+        output += '<br />'
+        output += i.description
+        output += '<br />'
+        output += '{:10.2f}'.format(i.price)
+        output += '<br />'
         output += '<br />'
     return output
 
