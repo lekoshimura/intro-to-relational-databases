@@ -23,7 +23,7 @@ class MenuItem(Base):
     name = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
     description = Column(String(250))
-    price = Column(String(8))
+    price = Column(Float(2))
     course = Column(String(250))
     restaurant_id = Column(Integer, ForeignKey('restaurant.id'))
     restaurant = relationship(Restaurant)
@@ -43,7 +43,6 @@ if __name__ == '__main__':
     restaurant_names = ["Sujinho", "Yano", "Fifties", "Franboi", "La Capella"]
 
     for restaurant_name in restaurant_names:
-        print restaurant_name
         restaurant = Restaurant()
         restaurant.name = restaurant_name
         session.add(restaurant)
@@ -53,7 +52,7 @@ if __name__ == '__main__':
         "Batata Frita",
         "Sorvete",
         "Peixe Assado",
-        "Choriço",
+        "Chorico",
         "Misto Quente",
         "Pastel de Queijo",
         "Pastel de Carne",
@@ -62,14 +61,14 @@ if __name__ == '__main__':
         "Feijoada Completa",
         "Feijoada Light",
         "Torta de Frango",
-        "Stroganoff",
+        "Strogonoff",
         "Beef Tartar",
         "Tsukemono",
         "Sunomono",
         "Yakissoba",
         "Tempura",
         "Onigiri",
-        "Almôndegas",
+        "Almondegas",
         "Bolo de Carne",
         "Salada de Atum",
         "Alface",
@@ -79,13 +78,14 @@ if __name__ == '__main__':
         "Ovo Cozido",
         "Ovo com Bacon",
         "Ovo de Codorna",
-        "Filé de Frango",
+        "Filet de Frango",
         "Anchova",
-        "Filé de Maminha",
-        "Filé de Alcatra",
+        "Filet de Maminha",
+        "Filet de Alcatra",
         "Picanha",
-        "Linguiça",
-        "Contra Filé",
+        "Linguica Toscana",
+        "Linguica de Frango",
+        "Contra Filet",
         "Milho Assado",
         "Milho Cozido",
         "Pamonha",
@@ -93,36 +93,38 @@ if __name__ == '__main__':
         "Kibe",
         "Coxiha",
         "Asa de Frango",
-        "Camarão Frito",
-        "Bobó de Camarão",
-        "Camarão Cozido",
-        "Camarão Assado",
+        "Camarao Frito",
+        "Bobo de Camarao",
+        "Camarao Cozido",
+        "Camarao Assado",
         "Esfiha de Carne",
         "Esfiha de Queijo",
         "Suco de Laranja",
-        "Suco de Limão",
+        "Suco de Limao",
         "Suco de Abacaxi",
         "Caldo de Cana",
-        "Suco de Limão com Hortelã",
+        "Suco de Limao com Hortela",
         "Suco de Uva",
         "Refrigerante",
-        "Café",
-        "Chá",
-        "Chá Verde"
+        "Cafe",
+        "Cha",
+        "Cha Verde",
+        "Bife a Milanesa",
+        "Frango a Milanesa",
+        "Peixe a Milanesa",
     ];
 
     def CreateRandomPrice():
         return randint(5, 50);
 
     for i,x in enumerate(menu_name):
-        s_menu = random.choice(menu_name);
-        new_menu_item = MenuItem (
-            name = s_menu,
-            description = "Refeição deliciosa feita de " + s_menu,
-            price = CreateRandomPrice(),
-            course = "comida, né?",
-            restaurant = random.choice(restaurant_names)
-        );
+        new_menu_item = MenuItem()
+        s_menu = random.choice(menu_name)
+        new_menu_item.name = s_menu;
+        new_menu_item.description = "Refeicao deliciosa feita de " + s_menu
+        new_menu_item.price = CreateRandomPrice()
+        new_menu_item.course = "comida"
+        new_menu_item.restaurant_id = randint(1,5)
         session.add(new_menu_item)
 
     session.commit()
