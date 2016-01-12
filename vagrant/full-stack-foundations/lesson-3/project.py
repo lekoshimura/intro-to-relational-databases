@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 app = Flask(__name__)
 
 from sqlalchemy import create_engine
@@ -87,6 +87,11 @@ def deleteMenuItem(restaurant_id, menu_id):
             item = item
         );
 
+@app.route('/restaurant/<int:restaurant_id>/menu/JSON')
+def restaurantMenuJSON(restaurant_id):
+    restaurant = session.query(Restaurant).get(restaurant_id);
+    items = session.query(MenuItem).filter_by(restaurant_id = restaurant_id).all()
+    return jsonify(MeunItems = [i.serialize for i in items])
 
 if __name__ == '__main__':
     app.debug = True
