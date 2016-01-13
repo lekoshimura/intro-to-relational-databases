@@ -116,8 +116,36 @@ session.commit()
 u"Auntie Ann's Diner' "
 >>> session.delete(spinach)
 >>> session.commit()
+```
+
+# Flask
+
+#JSON
+
+```python
+# No arquivo com as definições das classes sqlalchemy, declarar a
+# @property serialize(self) na classe em que deseja-se imprimir em json. Exemplo:
+class MenuItem(Base):
+    __tablename__ = 'menu_item'
+    id = Column(Integer, primary_key=True)
+    ...
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'price': self.price
+        }
+```
+
+```python
+# No arquivo com as definições dos pontos de entrada
+from flask import jsonify
 
 ```
+
+
 # Referências
 * [Solution Code to Full Stack Foundations (ud088)](https://github.com/lobrown/Full-Stack-Foundations)
 * [Vagrant](https://www.vagrantup.com/)
