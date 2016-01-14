@@ -1,0 +1,25 @@
+<body>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="main.css") }}">
+    </head>
+    <body>
+        <header>
+            <h1>Project 2</h1>
+        </header>
+        <h2>Shelters</h2>
+
+        {% for s in shelters %}
+            <h3>{{s.name}}</h3>
+            <ul>
+                <li>address: {{s.address}}</li>
+                <li>city: {{s.city}}</li>
+                <li>state: {{s.state}}</li>
+                <li>zipCode: {{s.zipCode}}</li>
+                <li>website: {{s.website}}</li>
+                <li>email: {{s.email}}</li>
+                <li>maximumCapacity: {{s.maximumCapacity}}</li>
+                <li>currentOccupancy: {{s.currentOccupancy}}</li>
+            </ul>
+        {% endfor %}
+    </body>
+</body>

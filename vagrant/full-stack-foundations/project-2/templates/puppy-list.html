@@ -1,0 +1,42 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="main.css") }}">
+</head>
+<body>
+    <header>
+        <h1>Projet 2</h1>
+    </header>
+    <h2>Puppies</h2>
+
+    <!--MESSAGE FLASHING EXAMPLE -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li><strong>{{message}}</strong></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <!-- <a href="url_for('puppyCreate')">Create new puppy</a> -->
+
+    {% for p in puppies %}
+        <h3>{{p.name}}</h3>
+        <ul>
+            <li>id: {{p.id}}</li>
+            <li>dateOfBirth: {{p.dateOfBirth}}</li>
+            <li>breed: {{p.breed}} </li>
+            <li>gender: {{p.gender}} </li>
+            <li>weight: {{p.weight}} </li>
+            <li>shelter_id: {{p.shelter_id}} </li>
+            <li>shelter: {{p.shelter.name}} </li>
+            <li>profile: {{p.profile}} </li>
+
+            <!-- <li><a href="url_for('editMenuItem', restaurant_id = restaurant.id, menu_id = i.id)">Edit</a></li>
+            <li><a href="url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id = i.id)">Delete</a></li> -->
+
+        </ul>
+    {% endfor %}
+</body>
+</html>

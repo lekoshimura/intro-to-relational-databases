@@ -1,0 +1,107 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+/*ref: http://sergiolopes.org/css-box-sizing-border-box/ */
+*, *:before, *:after {
+    /*border: 1px solid red !important;*/
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+body, html {
+    overflow-x:hidden;
+}
+
+body {
+    font-family: Roboto;
+}
+
+header {
+    background-color: #FFEE58;
+}
+
+header a#menu {
+    vertical-align: middle;
+}
+
+header a#menu svg {
+    width: 40px;
+    fill: #000000;
+    vertical-align:middle;
+}
+
+header h1 {
+    display: inline;
+    vertical-align:middle;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    font-size: 0; /*http://davidwalsh.name/remove-whitespace-inline-block*/
+}
+
+nav li {
+    width: 33.33%;
+    min-height: 48px;
+    display: inline-block;
+    font-size: 14px;
+}
+
+footer {
+
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    font-size: 0; /*http://davidwalsh.name/remove-whitespace-inline-block*/
+}
+
+footer li {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 25%;
+    padding: 0;
+    margin: 0;
+    min-height: 48px;
+    font-size: 14px;
+}
+
+@media screen and (max-width: 480px) {
+    body, html {
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    nav {
+        max-width: 200px;
+        background-color: red;
+        position: absolute;
+        left: 0;
+        height: 100%;
+        transform: translate(-200px,0);
+    }
+    nav.open{
+        transform: translate(0,0);
+    }
+    nav li {
+        width: 100%;
+        text-align: left;
+        line-height: 24px;
+        padding: 24px;
+    }
+}
+
+@media screen and (min-width: 901px) {
+    body, html {
+        max-width: 950px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+}

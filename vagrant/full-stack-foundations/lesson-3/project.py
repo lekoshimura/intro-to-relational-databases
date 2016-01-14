@@ -23,10 +23,10 @@ def restaurantMenu(restaurant_id):
     COM_TEMPLATE = True
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     items = session.query(MenuItem).filter_by(restaurant_id=restaurant.id)
-    output = '<h1>Restaurant: ' + restaurant.name + '</h1>'
     if COM_TEMPLATE:
         return render_template('menu.html', restaurant = restaurant, items = items)
     else:
+        output = '<h1>Restaurant: ' + restaurant.name + '</h1>'
         for i in items:
             output += str(i.id)
             output += '<br />'
