@@ -32,6 +32,12 @@ def adopterList():
     adopters = session.query(Adopter).all()
     return render_template('adopter-list.html', adopters = adopters)
 
+@app.route('/adopter/<int:adopter_id>/puppies')
+def puppiesByAdopter(adopter_id):
+    puppies = session.query(PuppyAdopter).filter_by(adopter_id = adopter_id).all()
+    adopter = session.query(Adopter).get(adopter_id)
+    return render_template('puppies-by-adopter.html', adopter = adopter, puppies = puppies)
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host = '0.0.0.0', port = 5000)

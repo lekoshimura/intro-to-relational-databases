@@ -11,6 +11,7 @@
             <h3>{{a.name}}</h3>
             <ul>
                 <li>{{a.id}}</li>
+                <li><a href="{{ url_for('puppiesByAdopter', adopter_id = a.id) }}">Puppies</a></li>
             </ul>
         {% endfor %}
     </html>

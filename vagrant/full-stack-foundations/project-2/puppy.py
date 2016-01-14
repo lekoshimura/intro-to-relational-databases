@@ -158,24 +158,6 @@ if __name__ == '__main__':
     puppy_description = ["funny", "loyal", "buddy", "likes to play"]
     breeds = ["Pastor Alemao", "Akita", "Shiba", "Bulldog", "Cocker", "Pequines", "SRD", "Dalmata", "Fila"]
 
-    # Add adopters
-
-    adopters = [
-        "Leonardo Eiji Koshimura",
-        "Cristiane de Borba", "Helio Seiji Koshimura",
-        "Barbapapa Jones",
-        "Indiana Jones",
-        "Han Solo",
-        "Hary Seldon",
-        "Harry Potter",
-        "Clarice Sterling",
-        "Jimmy Page",
-        "John Paul Jones",
-        "John Bonhan",
-        "Robert Plant",
-        "Roger Waters"
-        ]
-
     # This method will make a random age for each puppy between 0-18 months(approx.)
     # old from the day the algorithm was run.
 
@@ -225,6 +207,25 @@ if __name__ == '__main__':
         session.add(new_puppy)
         session.add(new_profile)
         session.commit()
+
+    # Add adopters
+
+    adopters = [
+        "Leonardo Eiji Koshimura",
+        "Cristiane de Borba",
+        "Helio Seiji Koshimura",
+        "Barbapapa Jones",
+        "Indiana Jones",
+        "Han Solo",
+        "Hary Seldon",
+        "Harry Potter",
+        "Clarice Sterling",
+        "Jimmy Page",
+        "John Paul Jones",
+        "John Bonhan",
+        "Robert Plant",
+        "Roger Waters"
+        ]
 
     for i,x in enumerate(adopters):
         new_adopter = Adopter(
