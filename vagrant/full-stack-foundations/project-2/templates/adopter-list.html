@@ -6,6 +6,8 @@
         <header>
             <h1>Adopters</h1>
         </header>
+        
+        <a href="{{ url_for('adopterCreate') }}">Create Adopter</a>
 
         {% for a in adopters %}
             <h3>{{a.name}}</h3>

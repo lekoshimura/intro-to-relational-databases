@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="main.css") }}">
+</head>
+
+<body>
+    <header>
+        <h1>Projet 2</h1>
+    </header>
+    
+    <h2>Create Shelter</h2>
+
+    <a href="{{ url_for('puppyList') }}">List Shelters</a>
+    
+    <form method="POST" action="{{ url_for('shelterCreate') }}">
+        <table>
+            <tr>
+                <td class="fieldName">name</td>
+                <td class="fieldValue"><input type="text" name="name" /></td>
+            </tr>
+            <tr>
+                <td class="fieldName">address</td>
+                <td class="fieldValue"><input type="text" name="address" /></td>
+            </tr>
+            <tr>
+                <td class="fieldName">city</td>
+                <td class="fieldValue"><input type="text" name="city" /></td>
+            </tr>
+            <tr>
+                <td class="fieldName">state</td>
+                <td class="fieldValue"><input type="text" name="state" /></td>
+            </tr>
+            <tr>
+                <td class="fieldName">zipCode</td>
+                <td class="fieldValue"><input type="text" name="zipCode" /></td>
+            </tr>
+            <tr>
+                <td class="fieldName">website</td>
+                <td class="fieldValue"><input type="text" name="website" /></td>
+            </tr>
+            <tr>
+                <td class="fieldName">email</td>
+                <td class="fieldValue"><input type="text" name="email" /></td>
+            </tr>
+            <tr>
+                <td class="fieldName">maximumCapacity</td>
+                <td class="fieldValue"><input type="text" name="maximumCapacity" /></td>
+            </tr>
+            <tr>
+                <td class="fieldName">&nbsp;</td>
+                <td class="fieldValue"><input type="submit" value="OK" /></td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>

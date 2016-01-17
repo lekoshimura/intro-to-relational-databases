@@ -7,10 +7,13 @@
             <h1>Project 2</h1>
         </header>
         <h2>Shelters</h2>
+        
+        <a href="{{ url_for('shelterCreate') }}">Create Shelter</a>
 
         {% for s in shelters %}
             <h3>{{s.name}}</h3>
             <ul>
+                <li>id: {{s.id}}</li>
                 <li>address: {{s.address}}</li>
                 <li>city: {{s.city}}</li>
                 <li>state: {{s.state}}</li>
