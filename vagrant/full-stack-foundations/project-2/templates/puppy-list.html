@@ -6,7 +6,9 @@
     <header>
         <h1>Projet 2</h1>
     </header>
-    <h2>Puppies</h2>
+    <h2>List Puppies</h2>
+    
+    <a href="{{ url_for('puppyCreate') }}">Create Puppy</a>
 
     <!--MESSAGE FLASHING EXAMPLE -->
     {% with messages = get_flashed_messages() %}

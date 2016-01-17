@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="main.css") }}">
+</head>
+
+<body>
+    <header>
+        <h1>Projet 2</h1>
+    </header>
+    
+    <h2>View Puppy</h2>
+
+    <a href="{{ url_for('puppyList') }}">List Puppies</a>
+    
+    <table>
+        <tr>
+            <td class="fieldName">name</td>
+            <td class="fieldValue">{{puppy.name}}</td>
+        </tr>
+        <tr>
+            <td class="fieldName">dateOfBirth (dd/mm/yyyy)</td>
+            <td class="fieldValue">{{puppy.dateOfBirth}}</td>
+        </tr>
+        <tr>
+            <td class="fieldName">breed</td>
+            <td class="fieldValue">{{puppy.breed}}</td>
+        </tr>
+        <tr>
+            <td class="fieldName">gender</td>
+            <td class="fieldValue">{{puppy.gender}}</td>
+        </tr>
+        <tr>
+            <td class="fieldName">weight</td>
+            <td class="fieldValue">{{puppy.weight}}</td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
