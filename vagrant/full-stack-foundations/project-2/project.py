@@ -32,10 +32,9 @@ def puppyView(puppy_id):
 @app.route('/puppy/create', methods = ['GET', 'POST'])
 def puppyCreate():
     if request.method == 'POST':
-        sDateOfBirth = datetime.strptime(request.form['dateOfBirth'], '%d/%m/%Y')
         puppy = Puppy(
             name = request.form['name'], 
-            dateOfBirth = sDateOfBirth,
+            dateOfBirth = datetime.strptime(request.form['dateOfBirth'], '%Y-%m-%d'),
             breed = request.form['breed'],
             gender = request.form['gender'],
             weight = request.form['weight']
@@ -46,7 +45,23 @@ def puppyCreate():
         return redirect(url_for('puppyView', puppy_id = puppy.id))
     else:
         return render_template('puppy-create.html');
-        
+
+@app.route('/puppy/edit/<int:puppy_id>', methods = ['GET', 'POST'])
+def puppyEdit(puppy_id):
+    if request.method == 'POST':
+        puppy = session.query(Puppy).get(puppy_id);
+        puppy.name = request.form['name'];
+        puppy.dateOfBirth = datetime.strptime(request.form['dateOfBirth'], '%Y-%m-%d');
+        puppy.breed = request.form['breed'];
+        puppy.gender = request.form['gender'];
+        puppy.weight = request.form['weight'];
+        session.commit();
+        flash('Puppy edited');
+        return redirect(url_for('puppyView', puppy_id = puppy.id))
+    else:
+        puppy = session.query(Puppy).get(puppy_id);
+        return render_template('puppy-edit.html', puppy = puppy)
+    
         
         
 @app.route('/shelter/list')
@@ -78,7 +93,26 @@ def shelterCreate():
         return redirect(url_for('shelterView', shelter_id = shelter.id))
     else:
         return render_template('shelter-create.html');
-    
+
+@app.route('/shelter/edit/<int:shelter_id>', methods = ['GET', 'POST'])
+def shelterEdit(shelter_id):
+    if request.method == 'POST':
+        shelter = session.query(Shelter).get(shelter_id);
+        shelter.name = request.form['name'];
+        shelter.address = request.form['address'];
+        shelter.city = request.form['city'];
+        shelter.state = request.form['state'];
+        shelter.zipCode = request.form['zipCode'];
+        shelter.website = request.form['website'];
+        shelter.email = request.form['email'];
+        shelter.maximumCapacity = request.form['maximumCapacity'];
+        session.commit();
+        flash('Shelter edited')
+        return redirect(url_for('shelterView', shelter_id = shelter.id))
+    else:
+        shelter = session.query(Shelter).get(shelter_id);
+        return render_template('shelter-edit.html', shelter = shelter)
+
 
 
 @app.route('/adopter/list')
@@ -103,6 +137,18 @@ def adopterCreate():
         return redirect(url_for('adopterView', adopter_id = adopter.id))
     else:
         return render_template('adopter-create.html')
+
+@app.route('/adopter/edit/<int:adopter_id>', methods = ['GET', 'POST'])
+def adopterEdit(adopter_id):
+    if request.method == 'POST':
+        adopter = session.query(Adopter).get(adopter_id);
+        adopter.name = request.form['name'];
+        session.commit();
+        flash('Adopter edited')
+        return redirect(url_for('adopterView', adopter_id = adopter.id))
+    else:
+        adopter = session.query(Adopter).get(adopter_id);
+        return render_template('adopter-edit.html', adopter = adopter)
 
 @app.route('/adopter/<int:adopter_id>/puppies')
 def puppiesByAdopter(adopter_id):

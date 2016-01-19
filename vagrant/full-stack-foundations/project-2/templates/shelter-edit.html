@@ -9,50 +9,48 @@
         <h1>Projet 2</h1>
     </header>
     
-    <h2>Create Shelter</h2>
+    <h2>Edit Shelter</h2>
 
-    <a href="{{ url_for('shelterList') }}">List Shelters</a>
-    
-    <form method="POST" action="{{ url_for('shelterCreate') }}">
+    <form method="POST" action="{{ url_for('shelterEdit', shelter_id = shelter.id) }}">
         <table>
             <tr>
                 <td class="fieldName">name</td>
-                <td class="fieldValue"><input type="text" name="name" /></td>
+                <td class="fieldValue"><input type="text" name="name" value="{{shelter.name}}" /></td>
             </tr>
             <tr>
                 <td class="fieldName">address</td>
-                <td class="fieldValue"><input type="text" name="address" /></td>
+                <td class="fieldValue"><input type="text" name="address" value="{{shelter.address}}" /></td>
             </tr>
             <tr>
                 <td class="fieldName">city</td>
-                <td class="fieldValue"><input type="text" name="city" /></td>
+                <td class="fieldValue"><input type="text" name="city" value="{{shelter.city}}" /></td>
             </tr>
             <tr>
                 <td class="fieldName">state</td>
-                <td class="fieldValue"><input type="text" name="state" /></td>
+                <td class="fieldValue"><input type="text" name="state" value="{{shelter.state}}" /></td>
             </tr>
             <tr>
                 <td class="fieldName">zipCode</td>
-                <td class="fieldValue"><input type="text" name="zipCode" /></td>
+                <td class="fieldValue"><input type="text" name="zipCode" value="{{shelter.zipCode}}" /></td>
             </tr>
             <tr>
                 <td class="fieldName">website</td>
-                <td class="fieldValue"><input type="text" name="website" /></td>
+                <td class="fieldValue"><input type="text" name="website" value="{{shelter.website}}" /></td>
             </tr>
             <tr>
                 <td class="fieldName">email</td>
-                <td class="fieldValue"><input type="text" name="email" /></td>
+                <td class="fieldValue"><input type="text" name="email" value="{{shelter.email}}" /></td>
             </tr>
             <tr>
                 <td class="fieldName">maximumCapacity</td>
-                <td class="fieldValue"><input type="text" name="maximumCapacity" /></td>
+                <td class="fieldValue"><input type="text" name="maximumCapacity" value="{{shelter.maximumCapacity}}" /></td>
             </tr>
             <tr>
                 <td class="fieldName">&nbsp;</td>
                 <td class="fieldValue"><input type="submit" value="OK" /></td>
             </tr>
         </table>
-    </form>
+    </form
 </body>
 
 </html>

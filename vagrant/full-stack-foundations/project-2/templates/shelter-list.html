@@ -22,6 +22,7 @@
                 <li>email: {{s.email}}</li>
                 <li>maximumCapacity: {{s.maximumCapacity}}</li>
                 <li>currentOccupancy: {{s.currentOccupancy}}</li>
+                <li><a href="{{ url_for('shelterEdit', shelter_id = s.id) }}">Edit</a></li>
             </ul>
         {% endfor %}
     </body>

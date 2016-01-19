@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="main.css") }}">
+</head>
+
+<body>
+    <header>
+        <h1>Projet 2</h1>
+    </header>
+    
+    <h2>Edit Adopter</h2>
+
+    <a href="{{ url_for('adopterList') }}">List Adopters</a>
+    
+    <form method="POST" action="{{ url_for('adopterEdit', adopter_id = adopter.id ) }}">
+        <table>
+            <tr>
+                <td class="fieldName">name</td>
+                <td class="fieldValue"><input type="text" name="name" value="{{adopter.name}}" /></td>
+            </tr>
+            <tr>
+                <td class="fieldName">&nbsp;</td>
+                <td class="fieldValue"><input type="submit" value="OK" /></td>
+            </tr>
+        </table>
+    </form>
+
+</body>
+
+</html>

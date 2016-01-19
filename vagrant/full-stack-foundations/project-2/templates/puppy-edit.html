@@ -8,31 +8,31 @@
     <header>
         <h1>Projet 2</h1>
     </header>
-    <h2>Create Puppy</h2>
+    <h2>Edit Puppy</h2>
 
     <a href="{{ url_for('puppyList') }}">List Puppies</a>
     
-    <form method="POST" action="{{ url_for('puppyCreate') }}">
+    <form method="POST" action="{{ url_for('puppyEdit', puppy_id = puppy.id )}}">
         <table>
             <tr>
                 <td class="fieldName">name</td>
-                <td class="fieldValue"><input type="text" name="name" /></td>
+                <td class="fieldValue"><input type="text" name="name" value="{{puppy.name}}"/></td>
             </tr>
             <tr>
                 <td class="fieldName">dateOfBirth (yyyy/mm/dd)</td>
-                <td class="fieldValue"><input type="text" name="dateOfBirth" /></td>
+                <td class="fieldValue"><input type="text" name="dateOfBirth" value="{{puppy.dateOfBirth}}"/></td>
             </tr>
             <tr>
                 <td class="fieldName">breed</td>
-                <td class="fieldValue"><input type="text" name="breed" /></td>
+                <td class="fieldValue"><input type="text" name="breed" value="{{puppy.breed}}"/></td>
             </tr>
             <tr>
                 <td class="fieldName">gender</td>
-                <td class="fieldValue"><input type="text" name="gender" /></td>
+                <td class="fieldValue"><input type="text" name="gender" value="{{puppy.gender}}"/></td>
             </tr>
             <tr>
                 <td class="fieldName">weight</td>
-                <td class="fieldValue"><input type="text" name="weight" /></td>
+                <td class="fieldValue"><input type="text" name="weight" value="{{puppy.weight}}"/></td>
             </tr>
             <tr>
                 <td class="fieldName">&nbsp;</td>
