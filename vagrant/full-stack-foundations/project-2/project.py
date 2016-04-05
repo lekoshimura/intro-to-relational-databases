@@ -61,6 +61,18 @@ def puppyEdit(puppy_id):
     else:
         puppy = session.query(Puppy).get(puppy_id);
         return render_template('puppy-edit.html', puppy = puppy)
+
+@app.route('/puppy/delete/<int:puppy_id>', methods = ['GET', 'POST'])
+def puppyDelete(puppy_id):
+    if request.method == 'POST':
+        puppy = session.query(Puppy).get(puppy_id)
+        session.delete(puppy);
+        session.commit();
+        flash('Puppy deleted');
+        return redirect(url_for('puppyList'))
+    else:
+        puppy = session.query(Puppy).get(puppy_id)
+        return render_template('puppy-delete.html', puppy = puppy)
     
         
         
@@ -113,7 +125,19 @@ def shelterEdit(shelter_id):
         shelter = session.query(Shelter).get(shelter_id);
         return render_template('shelter-edit.html', shelter = shelter)
 
-
+@app.route('/shelter/delete/<int:shelter_id>', methods = ['GET', 'POST'])
+def shelterDelete(shelter_id):
+    if request.method == 'POST':
+        shelter = session.query(Shelter).get(shelter_id);
+        session.delete(shelter);
+        session.commit();
+        flash('Shelter deleted');
+        return redirect(url_for('shelterList'))
+    else:
+        shelter = session.query(Shelter).get(shelter_id);
+        return render_template('shelter-delete.html', shelter = shelter)
+            
+    
 
 @app.route('/adopter/list')
 def adopterList():
@@ -149,6 +173,18 @@ def adopterEdit(adopter_id):
     else:
         adopter = session.query(Adopter).get(adopter_id);
         return render_template('adopter-edit.html', adopter = adopter)
+        
+@app.route('/adopter/delete/<int:adopter_id>', methods = ['GET', 'POST'])
+def adopterDelete(adopter_id):
+    if request.method == 'POST':
+        adopter = session.query(Adopter).get(adopter_id);
+        session.delete(adopter);
+        session.commit();
+        flash('Adopter deleted');
+        return redirect(url_for('adopterList'))
+    else:
+        adopter = session.query(Adopter).get(adopter_id);
+        return render_template('adopter-delete.html', adopter = adopter)
 
 @app.route('/adopter/<int:adopter_id>/puppies')
 def puppiesByAdopter(adopter_id):

@@ -34,10 +34,8 @@
             <li>shelter_id: {{p.shelter_id}} </li>
             <li>shelter: {{p.shelter.name}} </li>
             <li>profile: {{p.profile}} </li>
-
             <li><a href="{{ url_for('puppyEdit', puppy_id = p.id) }}">Edit</a></li>
-            <!--<li><a href="url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id = i.id)">Delete</a></li>-->
-
+            <li><a href="{{ url_for('puppyDelete', puppy_id = p.id) }}">Delete</a></li>
         </ul>
     {% endfor %}
 </body>

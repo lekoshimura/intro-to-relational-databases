@@ -23,6 +23,7 @@
                 <li>maximumCapacity: {{s.maximumCapacity}}</li>
                 <li>currentOccupancy: {{s.currentOccupancy}}</li>
                 <li><a href="{{ url_for('shelterEdit', shelter_id = s.id) }}">Edit</a></li>
+                <li><a href="{{ url_for('shelterDelete', shelter_id = s.id) }}">Delete</a></li>
             </ul>
         {% endfor %}
     </body>
